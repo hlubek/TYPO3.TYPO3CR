@@ -243,9 +243,16 @@ interface NodeInterface {
 	/**
 	 * Returns the content type of this node.
 	 *
-	 * @return string $contentType
+	 * @return string The content type as string
 	 */
 	public function getContentType();
+
+	/**
+	 * Returns the content type of this node as an object.
+	 *
+	 * @return \TYPO3\TYPO3CR\Domain\Model\ContentType The content type as object
+	 */
+	public function getContentTypeModel();
 
 	/**
 	 * Creates, adds and returns a child node of this node.

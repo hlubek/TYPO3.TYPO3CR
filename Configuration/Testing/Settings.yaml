@@ -1,0 +1,17 @@
+#                                                                        #
+# Settings                                                               #
+#                                                                        #
+# This file contains additions to the base configuration for the FLOW3   #
+# Framework when it runs in Testing context.                             #
+
+TYPO3:
+  TYPO3CR:
+    contentTypes:
+      #
+      # Configure a content type with a special node label generator implementation
+      #
+      'TYPO3.TYPO3CR:TestTypeWithLabel':
+        label: 'Test type with generated node label'
+        nodeLabelGenerator: TYPO3\TYPO3CR\Tests\Functional\Domain\TestTypeLabelGenerator
+        nodeLabelGeneratorOptions:
+          propertyName: specialLabel

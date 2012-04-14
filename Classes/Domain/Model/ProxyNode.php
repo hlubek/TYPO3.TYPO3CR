@@ -364,6 +364,13 @@ class ProxyNode implements NodeInterface {
 	}
 
 	/**
+	 * @return \TYPO3\TYPO3CR\Domain\Model\ContentType
+	 */
+	public function getContentTypeModel() {
+		return $this->contentTypeManager->getContentType($this->getContentType());
+	}
+
+	/**
 	 * Creates, adds and returns a child node of this node.
 	 *
 	 * @param string $name Name of the new node

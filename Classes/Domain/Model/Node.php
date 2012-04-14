@@ -265,9 +265,12 @@ class Node implements NodeInterface {
 	 * @todo Use a property specified by the content type once it supports it.
 	 */
 	public function getLabel() {
-		$label = $this->hasProperty('title') ? strip_tags($this->getProperty('title')) : '(' . $this->getContentType() . ') '. $this->getName();
-		$croppedLabel = \TYPO3\FLOW3\Utility\Unicode\Functions::substr($label, 0, self::LABEL_MAXIMUM_CHARACTERS);
-		return $croppedLabel . (strlen($croppedLabel) < strlen($label) ? ' …' : '');
+		$contentType = $this->getContentTypeModel();
+		$nodeLabelGenerator = $contentType->getNodeLabelGenerator();
+		if ($nodeLabelGenerator === NULL) {
+			$nodeLabelGenerator = new \TYPO3\TYPO3CR\Domain\Model\DefaultNodeLabelGenerator();
+		}
+		return $nodeLabelGenerator->getLabel($this);
 	}
 
 	/**
@@ -551,12 +554,19 @@ class Node implements NodeInterface {
 	}
 
 	/**
-	 * Returns the content type of this node.
+	 * Returns the content type of this node as string.
 	 *
 	 * @return string $contentType
 	 */
 	public function getContentType() {
 		return $this->contentType;
+	}
+
+	/**
+	 * @return \TYPO3\TYPO3CR\Domain\Model\ContentType
+	 */
+	public function getContentTypeModel() {
+		return $this->contentTypeManager->getContentType($this->contentType);
 	}
 
 	/**

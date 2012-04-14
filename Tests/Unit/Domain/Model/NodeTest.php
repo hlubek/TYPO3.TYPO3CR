@@ -13,17 +13,31 @@ namespace TYPO3\TYPO3CR\Tests\Unit\Domain\Model;
 
 /**
  * Testcase for the "Node" domain model
- *
  */
 class NodeTest extends \TYPO3\FLOW3\Tests\UnitTestCase {
 
+	/**
+	 * @var \TYPO3\TYPO3CR\Domain\Model\Workspace
+	 */
 	protected $mockWorkspace;
+
+	/**
+	 * @var \TYPO3\TYPO3CR\Domain\Model\NodeInterface
+	 */
 	protected $node;
 
+	/**
+	 * Set up a workspace stub and a node
+	 */
 	public function setUp() {
 		$this->mockWorkspace = $this->getMock('TYPO3\TYPO3CR\Domain\Model\Workspace', array(), array(), '', FALSE);
 		$this->node = $this->getAccessibleMock('TYPO3\TYPO3CR\Domain\Model\Node', array('dummy'), array('/foo/bar', $this->mockWorkspace));
 		$this->node->_set('nodeRepository', $this->getMock('TYPO3\FLOW3\Persistence\RepositoryInterface'));
+		$this->node->_set('nodeRepository', $this->getMock('TYPO3\FLOW3\Persistence\RepositoryInterface'));
+		$mockContentTypeManager = $this->getMock('TYPO3\TYPO3CR\Domain\Service\ContentTypeManager');
+		$mockContentType = $this->getMock('TYPO3\TYPO3CR\Domain\Model\ContentType', array(), array(), '', NULL);
+		$mockContentTypeManager->expects($this->any())->method('getContentType')->will($this->returnValue($mockContentType));
+		$this->inject($this->node, 'contentTypeManager', $mockContentTypeManager);
 	}
 
 	/**

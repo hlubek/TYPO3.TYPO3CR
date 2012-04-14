@@ -132,6 +132,19 @@ class ContentType {
 	}
 
 	/**
+	 * Get the configured node label configurator
+	 *
+	 * @return \TYPO3\TYPO3CR\Domain\Model\NodeLabelGeneratorInterface The configured node label generator or NULL if none was registered
+	 */
+	public function getNodeLabelGenerator() {
+		if (!isset($this->configuration['nodeLabelGenerator'])) {
+			return NULL;
+		}
+		$nodeLabelGeneratorClassName = $this->configuration['nodeLabelGenerator'];
+		return new $nodeLabelGeneratorClassName();
+	}
+
+	/**
 	 * Magic get* and has* method for all properties inside $configuration.
 	 *
 	 * @param string $methodName
